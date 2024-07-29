@@ -11,11 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: upstream
+          ref: main_test
       - name: Reset promotion branch
         run: |
-          git fetch origin main_test:main_test
-          git reset --hard main_test
+          git fetch origin upstream:upstream
+          git reset --hard upstream
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
