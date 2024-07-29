@@ -1,0 +1,22 @@
+name: Create pull request to merge branch upstream with main_test
+on:
+  schedule:
+    - cron:  '0 8 * * 1,4'
+    # scheduled at 08:00 every Monday and Thursday
+
+  workflow_dispatch:  # click the button on Github repo!
+jobs:
+  mergeUpstream:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main_test
+      - name: Reset promotion branch
+        run: |
+          git fetch origin upstream:upstream
+          git reset --hard upstream
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: main_test_upstream
