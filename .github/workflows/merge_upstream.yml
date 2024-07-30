@@ -31,10 +31,10 @@ jobs:
   merge_upstream_pull_request:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout main_test branch
     - uses: actions/checkout@v4
       with:
         ref: main_test
+    - name: Reset main_test branch
       run: |
         git fetch origin upstream:upstream
         git reset --hard upstream
