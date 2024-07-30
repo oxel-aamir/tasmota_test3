@@ -1,0 +1,46 @@
+on:
+  schedule:
+    - cron:  '0 9 * * 1'
+    # scheduled at 09:00 every Monday
+
+  workflow_dispatch:  # click the button on Github repo!
+
+
+jobs:
+  sync_with_upstream:
+    runs-on: ubuntu-latest
+    name: Sync branch upstream with tasmota development branch
+    steps:
+    - name: Checkout upstream branch
+      uses: actions/checkout@v4
+      with:
+        ref: upstream
+    - name: Pull (Fast-Forward) upstream changes
+      id: sync
+      uses: aormsby/Fork-Sync-With-Upstream-action@v2.1
+      with:
+        upstream_repository: arendst/Tasmota
+        upstream_branch: development
+        target_branch: upstream
+        git_pull_args: --ff-only                    # optional arg use, defaults to simple 'pull'
+    - name: Check for new commits
+      if: steps.sync.outputs.has_new_commits
+      run: echo "There were new commits."
+    - name: Timestamp
+      run: date
+  merge_upstream_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout main_test branch
+    - uses: actions/checkout@v4
+      with:
+        ref: main_test
+      run: |
+        git fetch origin upstream:upstream
+        git reset --hard upstream
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        branch: main_test_upstream
+    - name: Timestamp
+      run: date
