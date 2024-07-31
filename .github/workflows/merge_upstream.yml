@@ -39,7 +39,7 @@ jobs:
         git fetch origin upstream:upstream
         git reset --hard upstream
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v6.15
+      uses: peter-evans/create-pull-request@v6.1.0
       with:
         branch: main_test_upstream
 	delete-branch: false
