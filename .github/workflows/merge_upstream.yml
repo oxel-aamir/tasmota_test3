@@ -42,6 +42,5 @@ jobs:
       uses: peter-evans/create-pull-request@v6
       with:
         branch: main_test_upstream
-	delete-branch: true
     - name: Timestamp
       run: date
