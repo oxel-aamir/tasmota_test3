@@ -41,6 +41,7 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6.1.0
       with:
+        base: main_test
         branch: main_test_upstream
     - name: Timestamp
       run: date
