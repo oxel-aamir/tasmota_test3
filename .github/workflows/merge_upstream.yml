@@ -41,6 +41,7 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
       with:
-        branch: main_test_upstream
+        branch: main_test_upstream        
+		    delete-branch: true
     - name: Timestamp
       run: date
