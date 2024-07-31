@@ -1,7 +1,7 @@
 on:
   schedule:
     - cron:  '0 9 * * 1'
-    # scheduled at 09:00 every Monday
+    # scheduled at 09:00 UTC every Monday
 
   workflow_dispatch:  # click the button on Github repo!
 
@@ -28,16 +28,12 @@ jobs:
       run: echo "There were new commits."
     - name: Timestamp
       run: date
-  merge_upstream_pull_request:
+  create_pull_request:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
       with:
         ref: main_test
-    - name: Reset main_test branch
-      run: |
-        git fetch origin upstream:upstream
-        git reset --hard upstream
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
       with:
