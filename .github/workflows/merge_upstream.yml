@@ -31,11 +31,17 @@ jobs:
   merge_upstream_pull_request:
     runs-on: ubuntu-latest
     steps:
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v6
+    - uses: actions/checkout@v4
       with:
-      	base: main_test
-       	delete-branch: false
-	branch: upstream
+        ref: main_test
+    - name: Reset main_test branch
+      run: |
+        git fetch origin upstream:upstream
+        git reset --hard upstream
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6.15
+      with:
+        branch: main_test_upstream
+	delete-branch: false
     - name: Timestamp
       run: date
